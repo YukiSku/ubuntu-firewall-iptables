@@ -10,9 +10,10 @@ apt install iptables-persistent
 mkdir /root/COUNTRY_CODE
 
 
-3. Put 'dl_iplist' on /etc/cron.monthly.
+3. Put 'dl_iplist' on /etc/cron.monthly. Run it once.
 
 mv dl_iplist /etc/cron.monthly/
+bash /etc/cron.monthly/dl_iplist
 
 
 4. Execute following
