@@ -23,8 +23,9 @@ case $yn in
                 # 設定をリロード
                 bash netfilter-persistent reload
 
-                # idsで登録されたipを再度設定。
-                bash /root/atcheck.sh
+                # idsで登録されたipを再度設定。動的FW構築後に有効化する。
+                #bash /root/atcheck.sh
+                
                 echo -e "  IPTABLES reloading done.\n"
         ;;
         *)
