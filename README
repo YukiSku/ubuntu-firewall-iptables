@@ -1,4 +1,19 @@
 These scripts reqire iptables-persistent. Execute following command to install.
 
+1. Install 'iptables-persistent'.
+
 apt install iptables-persistent
 
+
+2. Put 'dl_iplist' on /etc/cron.monthly.
+
+mv dl_iplist /etc/cron.monthly/
+
+
+3. Execute following
+
+bash syssecurity.sh       # Run once only
+bash makerules.sh
+bash iptables.sh
+
+Now you got iron wall!
