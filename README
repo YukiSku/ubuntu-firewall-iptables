@@ -5,12 +5,17 @@ These scripts reqire iptables-persistent. Execute following command to install.
 apt install iptables-persistent
 
 
-2. Put 'dl_iplist' on /etc/cron.monthly.
+2. Create work Dir.
+
+mkdir /root/COUNTRY_CODE
+
+
+3. Put 'dl_iplist' on /etc/cron.monthly.
 
 mv dl_iplist /etc/cron.monthly/
 
 
-3. Execute following
+4. Execute following
 
 bash syssecurity.sh       # Run once only
 bash makerules.sh
