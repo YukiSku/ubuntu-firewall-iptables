@@ -1,0 +1,54 @@
+#!/bin/bash
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+#############################################################
+# Automatic download script for Country Code as cidr list.  #
+#############################################################
+
+MYDIR=/root/COUNTRY_CODE
+
+rm -f $MYDIR/cidr.txt.old
+
+if [ -e $MYDIR/cidr.txt ];then
+    mv $MYDIR/cidr.txt $MYDIR/cidr.txt.old
+fi
+
+# 一覧のダウンロード。nami.jpさんに負荷をかけないよう、何度も実行しない！
+# *****.jpの部分を自ドメインに編集。
+wget -q -O $MYDIR/cidr.txt.gz  http://nami.jp/ipv4bycc/cidr.txt.gz \
+        --user-agent='******@******.jp' --referer='Thanks from *****.jp'
+
+if [ $? -ne 0 ]; then
+    echo "Couldn't download Country Codes list from nami.jp." | mail -s 'dl_iplist was failed - Hinadori Server' root
+    cp $MYDIR/cidr.txt.old $MYDIR/cidr.txt
+    exit
+else
+    gunzip -c $MYDIR/cidr.txt.gz > $MYDIR/cidr.txt
+    rm -f $MYDIR/cidr.txt.gz
+fi
+
+if [ -s $MYDIR/cidr.txt ];then
+    rm -f $MYDIR/cidr.txt.old
+    bash /root/makerules.sh > /dev/null 2>&1
+    # すぐ適応させる場合は以下を実行。
+    # echo "y" | bash /root/iptables.sh
+
+    # 通知する場合は以下を実行。内容は各自で適当に。
+    echo -e " Notice information to Network Manager.\
+\n\n Hello, This is from /etc/cron.monthly/dl_iplist at My SERVER.\
+\n Country codes list (COUNTRY_CODE/cidr.txt) and rules file (/etc/iptables/rules.v4) are updated.\
+\n Please reload iptables manually or wait for next restart system at Sunday for apply.\
+\n\n Thanks and regards.\
+\n\n --------------------------------------\
+\n           From My Server \
+\n --------------------------------------" \
+      | mail -s "IP list updated - My Sever." root
+
+else
+    # Downloadできたがファイルが空だった場合
+    rm -f $MYDIR/cidr.txt
+    mv $MYDIR/cidr.txt.old $MYDIR/cidr.txt
+fi
+
+exit 0
