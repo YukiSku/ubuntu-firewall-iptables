@@ -20,7 +20,7 @@ wget -q -O $MYDIR/cidr.txt.gz  http://nami.jp/ipv4bycc/cidr.txt.gz \
         --user-agent='******@******.jp' --referer='Thanks from *****.jp'
 
 if [ $? -ne 0 ]; then
-    echo "Couldn't download Country Codes list from nami.jp." | mail -s 'dl_iplist was failed - Hinadori Server' root
+    echo "Couldn't download Country Codes list from nami.jp." | mail -s 'dl_iplist was failed - My Server' root
     cp $MYDIR/cidr.txt.old $MYDIR/cidr.txt
     exit
 else
