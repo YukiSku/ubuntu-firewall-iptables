@@ -1,4 +1,9 @@
-These scripts reqire iptables-persistent. Execute following command to install.
+##---------------------------------------------------------------------##
+##  Scripts to make IPTABLES configure files for JPN usual servers.    ##
+##                                              2023.4 Yukisku         ##
+##---------------------------------------------------------------------##
+
+These scripts require iptables-persistent. Execute following command to install.
 
 1. Install 'iptables-persistent'.
 
@@ -16,10 +21,14 @@ mv dl_iplist /etc/cron.monthly/
 bash /etc/cron.monthly/dl_iplist
 
 
-4. Execute following
+# Run once only for system files.
 
-bash syssecurity.sh       # Run once only
+bash syssecurity.sh
+
+
+4. Execute following
+       
 bash makerules.sh
 bash iptables.sh
 
-Now you got iron wall!
+
